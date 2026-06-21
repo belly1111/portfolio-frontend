@@ -247,7 +247,6 @@ function ContactSection() {
   return (
     <div id="contact">
       <Stars />
-      <Divider />
 
       <section className="contact-section reveal" ref={revealRef}>
         <div className="contact-container">
