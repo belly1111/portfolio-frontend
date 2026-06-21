@@ -1,0 +1,201 @@
+
+
+/* ================= CONTACT ================= */
+.contact-section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-container {
+  width: 420px;
+  padding: 30px;
+  background: #0b1226;
+  border: 1px solid rgba(0,255,255,0.2);
+  border-radius: 15px;
+  box-shadow: 0 0 40px rgb(0, 179, 255);
+  color: white;
+  text-align: center;
+  animation: formEnter 1s ease forwards;
+  opacity: 0;
+  transform: translateY(40px);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+
+  -webkit-box-shadow: 0 0 0px 1000px #0b132b inset;
+
+  transition: background-color 9999s ease-in-out 0s;
+
+  caret-color: #ffffff;
+}
+@keyframes formEnter {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.contact-container h2 { margin-bottom: 5px; }
+.contact-container p  { font-size: 13px; opacity: 0.7; margin-bottom: 20px; }
+
+.input-box {
+  position: relative;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.input-box input,
+.input-box textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: #0f172a;
+  color: white;
+  border-radius: 8px;
+  outline: none;
+  text-align: center;
+}
+
+.input-box textarea { height: 100px; resize: none; }
+
+.input-box label {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  transition: 0.3s;
+  pointer-events: none;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label,
+.input-box textarea:focus ~ label,
+.input-box textarea:valid ~ label {
+  top: -10px;
+  font-size: 11px;
+  color: cyan;
+  transform: translateX(-50%);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #00f5ff, #3b82f6);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,255,255,0.4);
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.status.show {
+  opacity: 1;
+  animation: popMsg 3s ease forwards;
+}
+
+@keyframes popMsg {
+  0%  { transform: scale(0.7); opacity: 0; }
+  20% { transform: scale(1.1); opacity: 1; }
+  80% { transform: scale(1);   opacity: 1; }
+  100%{ transform: scale(0.9); opacity: 0; }
+}
+
+.contact-container.sending {
+  box-shadow: 0 0 20px cyan, 0 0 60px rgba(0,255,255,0.4);
+  transform: scale(1.02);
+  transition: 0.3s;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-icons a { color: white; font-size: 20px; transition: 0.3s; }
+.social-icons a:hover { color: cyan; transform: translateY(-3px); }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .first-section,
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 60px 20px;
+    min-height: auto;
+  }
+  .text, .about-text { align-items: center; }
+  .btns { justify-content: center; flex-wrap: wrap; gap: 10px; }
+  .skills-section { grid-template-columns: repeat(2, 1fr); gap: 60px; }
+  .cards, .projects-container { grid-template-columns: 1fr; gap: 15px; }
+  h1 { font-size: 32px; }
+
+  .menu-toggle { display: flex; }
+
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 200px;
+    flex-direction: column;
+    align-items: center;
+    background: #0f172a;
+    padding: 20px;
+    border-radius: 15px;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: 0.3s;
+  }
+
+  .nav-links.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .search input { width: 80px; }
+}
+
+@media (max-width: 480px) {
+  .solar-system { width: 260px; height: 260px; }
+  h1 { font-size: 26px; }
+  .search { display: none; }
+  .socials { justify-content: center; }
+  .project-skills span { width: 38px; height: 38px; }
+  .project-skills img  { width: 20px; height: 20px; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .first-section,
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 80px 40px;
+    min-height: auto;
+  }
+  .skills-section     { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .cards, .projects-container { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  h1 { font-size: 38px; }
+}
