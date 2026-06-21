@@ -8,71 +8,114 @@ function Contact() {
   const revealRef = useReveal();
   const statusRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const API_URL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:8080"
+      : "https://contact-backend-production-e0dc.up.railway.app";
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const status = statusRef.current;
+
     const form = e.target;
 
-    // أضيف class sending على الـ container
-    const container = form.closest(".contact-container");
-    container.classList.add("sending");
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    if (statusRef.current) {
+      statusRef.current.textContent = "Sending... 🚀";
+    }
+
+    try {
+      const res = await fetch(`${API_URL}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        if (statusRef.current) {
+          statusRef.current.textContent = "Message sent successfully ✅";
+        }
+        form.reset();
+      } else {
+        if (statusRef.current) {
+          statusRef.current.textContent = "Failed to send ❌";
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      if (statusRef.current) {
+        statusRef.current.textContent = "Server error ❌";
+      }
+    }
 
     setTimeout(() => {
-      container.classList.remove("sending");
-      status.textContent = "✅ Message sent successfully!";
-      status.classList.add("show");
-      form.reset();
-
-      setTimeout(() => {
-        status.classList.remove("show");
-      }, 3000);
-    }, 1500);
+      if (statusRef.current) {
+        statusRef.current.textContent = "";
+      }
+    }, 3000);
   };
 
   return (
     <div id="contact">
-      <Stars/>
-<Divider />
-
+      <Stars />
+      <Divider />
 
       <section className="contact-section reveal" ref={revealRef}>
         <div className="contact-container">
-
           <h2>Contact Me</h2>
           <p>Send me a message from the universe 🚀</p>
 
           <form onSubmit={handleSubmit}>
-
             <div className="input-box">
-              <input type="text" id="name" required />
-              <label htmlFor="name">Name</label>
+              <input type="text" name="name" required />
+              <label>Name</label>
             </div>
 
             <div className="input-box">
-              <input type="email" id="email" required />
-              <label htmlFor="email">Email</label>
+              <input type="email" name="email" required />
+              <label>Email</label>
             </div>
 
             <div className="input-box">
-              <textarea id="message" required></textarea>
-              <label htmlFor="message">Message</label>
+              <textarea name="message" required></textarea>
+              <label>Message</label>
             </div>
 
             <button type="submit">Send</button>
+
             <p className="status" ref={statusRef}></p>
 
             <div className="social-icons">
-              <a href="https://www.facebook.com/share/1D59ZYptjF/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.facebook.com/share/1D59ZYptjF/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <i className="fa-brands fa-facebook"></i>
               </a>
-              <a href="https://www.instagram.com/bellyy___1/" target="_blank" rel="noopener noreferrer">
+
+              <a
+                href="https://www.instagram.com/bellyy___1/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <i className="fa-brands fa-instagram"></i>
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <i className="fa-brands fa-github"></i>
               </a>
             </div>
-
           </form>
         </div>
       </section>
