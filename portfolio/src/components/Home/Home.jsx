@@ -34,7 +34,7 @@ function Home() {
             <div className="profile-extra-ring">
           <div className="profile-ring">
             <div className="profile-glow"></div>
-            <img src={profileImage} alt="Nabil" className="profile-img" />
+            <img src={profileImage0} alt="Nabil" className="profile-img" />
           </div>
         </div>
         </div>
@@ -88,7 +88,7 @@ function AboutSection() {
       <section id="about" className="about reveal" ref={revealRef}>
         <div className="about-container">
           <div className="about-img">
-            <img src={profileImage0} alt="Profile Image" />
+            <img src={profileImage} alt="Profile Image" />
           </div>
           <div className="about-text">
             <h1>About <span>Me</span></h1>
