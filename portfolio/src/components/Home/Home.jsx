@@ -2,7 +2,8 @@ import { useRef } from "react";
 import "./style.css";
 import Stars from "../Stars/Stars";
 import useReveal from "../../hooks/useReveal";
-import profileImage from "../../assets/images/P.jpeg";
+import profileImage0 from "../../assets/images/P.jpeg";
+import profileImage from "../../assets/images/ChatGPT Image Jun 26, 2026, 06_04_55 AM.png";
 import profileImage1 from "../../assets/images/Screenshot 2026-06-21 210414.png";
 import profileImage2 from "../../assets/images/Screenshot 2026-06-21 210537.png";
 import profileImage3 from "../../assets/images/Screenshot 2026-06-21 210707.png";
@@ -87,7 +88,7 @@ function AboutSection() {
       <section id="about" className="about reveal" ref={revealRef}>
         <div className="about-container">
           <div className="about-img">
-            <img src={profileImage} alt="Profile Image" />
+            <img src={profileImage0} alt="Profile Image" />
           </div>
           <div className="about-text">
             <h1>About <span>Me</span></h1>
