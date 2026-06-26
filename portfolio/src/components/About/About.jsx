@@ -1,6 +1,6 @@
 import "./style.css";
 import useReveal from "../../hooks/useReveal";
-import profileImage from "../../assets/images/P.jpeg";
+import profileImage from "../../assets/images/ChatGPT Image Jun 26, 2026, 06_13_02 AM.png";
 import Stars from "../Stars/Stars";
 function About() {
   const revealRef = useReveal();
