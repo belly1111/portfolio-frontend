@@ -4,14 +4,12 @@ import Stars from "../Stars/Stars";
 import profileImage1 from "../../assets/images/Screenshot 2026-06-21 210414.png";
 import profileImage2 from "../../assets/images/Screenshot 2026-06-21 210537.png";
 import profileImage3 from "../../assets/images/Screenshot 2026-06-21 210707.png";
-import Divider from "../Divider/Divider";
 function Projects() {
   const revealRef = useReveal();
 
   return (
     <div id="projects">
       <Stars/>
-      <Divider />
 
       <section className="projects reveal" ref={revealRef}>
 

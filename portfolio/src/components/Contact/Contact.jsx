@@ -2,7 +2,6 @@ import { useRef } from "react";
 import "./style.css";
 import useReveal from "../../hooks/useReveal";
 import Stars from "../Stars/Stars";
-import Divider from "../Divider/Divider";
 
 function Contact() {
   const revealRef = useReveal();
@@ -64,7 +63,6 @@ function Contact() {
   return (
     <div id="contact">
       <Stars />
-      <Divider />
 
       <section className="contact-section reveal" ref={revealRef}>
         <div className="contact-container">

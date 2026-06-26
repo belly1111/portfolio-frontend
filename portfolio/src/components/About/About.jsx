@@ -2,7 +2,6 @@ import "./style.css";
 import useReveal from "../../hooks/useReveal";
 import profileImage from "../../assets/images/P.jpeg";
 import Stars from "../Stars/Stars";
-import Divider from "../Divider/Divider";
 function About() {
   const revealRef = useReveal();
 
@@ -10,7 +9,6 @@ function About() {
     <div id="about">
             {/* النجوم */}
       <Stars />
-      <Divider />
 
       
       <section className="about reveal " ref={revealRef}>
