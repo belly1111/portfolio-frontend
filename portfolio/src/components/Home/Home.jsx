@@ -2,8 +2,7 @@ import { useRef } from "react";
 import "./style.css";
 import Stars from "../Stars/Stars";
 import useReveal from "../../hooks/useReveal";
-import profileImage from "../../assets/images/P.jpeg";
-import profileImage0 from "../../assets/images/ChatGPT Image Jun 26, 2026, 06_04_55 AM.png";
+import profileImage from "../../assets/images/ChatGPT Image Jun 26, 2026, 06_13_02 AM.png";
 import profileImage1 from "../../assets/images/Screenshot 2026-06-21 210414.png";
 import profileImage2 from "../../assets/images/Screenshot 2026-06-21 210537.png";
 import profileImage3 from "../../assets/images/Screenshot 2026-06-21 210707.png";
@@ -34,7 +33,7 @@ function Home() {
             <div className="profile-extra-ring">
           <div className="profile-ring">
             <div className="profile-glow"></div>
-            <img src={profileImage0} alt="Nabil" className="profile-img" />
+            <img src={profileImage} alt="Nabil" className="profile-img" />
           </div>
         </div>
         </div>
