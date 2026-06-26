@@ -79,6 +79,7 @@ body::before {
 .divider-wrapper {
   width: 100%;
   padding: 16px 0;
+  /* ✅ مش overflow hidden عشان الـ glow ميتقطعش */
   overflow: visible;
 }
 
@@ -96,16 +97,103 @@ body::before {
   50%       { opacity: 1; filter: brightness(2) drop-shadow(0 0 4px currentColor); }
 }
 
+/* ================= SOLAR SYSTEM ================= */
+.solar-system {
+  flex: 1;
+  display: flex;
+  position: relative;
+  width: 520px;
+  height: 400px;
+}
+
+.sun {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, #fff7ae, #facc15, #f97316);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulseSun 2s infinite ease-in-out;
+  transition: transform 0.15s ease-out;
+}
+
+@keyframes pulseSun {
+  0%,100% { box-shadow: 0 0 60px #facc15, 0 0 120px #f59e0b; }
+  50%      { box-shadow: 0 0 100px #facc15, 0 0 200px #f59e0b; }
+}
+
+.orbit {
+  position: absolute;
+  border: 1px dashed rgba(255,255,255,0.08);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rotate linear infinite;
+}
+
+.planet {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: 0.4s;
+  box-shadow: inset -4px -4px 8px rgba(0,0,0,0.6);
+}
+
+.planet:hover {
+  transform: translateX(-50%) scale(1.6);
+  box-shadow: 0 0 20px white;
+}
+
+.moon {
+  position: absolute;
+  width: 7px; height: 7px;
+  background: radial-gradient(circle, #eee, #999);
+  border-radius: 50%;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: rotate 2s linear infinite;
+}
+
+.o1 { width: 100px; height: 100px; animation-duration: 4s; }
+.o2 { width: 140px; height: 140px; animation-duration: 5s; }
+.o3 { width: 180px; height: 180px; animation-duration: 6s; }
+.o4 { width: 220px; height: 220px; animation-duration: 7s; }
+.o5 { width: 260px; height: 260px; animation-duration: 8s; }
+.o6 { width: 300px; height: 300px; animation-duration: 9s; }
+.o7 { width: 340px; height: 340px; animation-duration: 10s; }
+.o8 { width: 380px; height: 380px; animation-duration: 11s; }
+
+.p1 { background: #9ca3af; }
+.p2 { background: #eab308; }
+.p3 { background: radial-gradient(circle at 30% 30%, #3b82f6, #1e40af); }
+.p4 { background: #f97316; }
+.p5 { background: #facc15; }
+.p6 { background: #d4d4d8; }
+.p7 { background: #60a5fa; }
+.p8 { background: #1e3a8a; }
+
+@keyframes rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 /* ================= HOME SECTION ================= */
 .first-section {
   display: flex;
-  flex-direction: row-reverse; /* ← الصورة يمين والكلام شمال */
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 60px;
-  gap: 80px;
+  padding: 40px 20px;
+  gap: 60px;
   min-height: calc(100vh - 60px);
 }
 
@@ -115,8 +203,8 @@ body::before {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* ← الكلام على الشمال */
-  text-align: left;
+  align-items: center;
+  text-align: center;
 }
 
 .text h1 {
@@ -141,128 +229,29 @@ h1 span {
 .p, .pp {
   color: #94a3b8;
   font-size: 18px;
-  max-width: 420px;
-  line-height: 1.8;
+  max-width: 350px;
 }
 
-/* ================= PROFILE IMAGE ================= */
-.profile-wrapper {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+/* ================= TYPEWRITER ================= */
+.typewriter {
+  display: inline-block;
+  border-right: 2px solid #8b5cf6;
+  padding-right: 4px;
+  animation: blink 0.7s step-end infinite;
+  color: #8b5cf6;
+  font-size: 20px;
+  margin-top: 8px;
+  min-height: 28px;
 }
 
-/* الحلقات الخارجية المتحركة */
-.profile-wrapper::before,
-.profile-wrapper::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(139,92,246,0.2);
-  animation: orbitPulse 4s ease-in-out infinite;
+@keyframes blink {
+  50% { border-color: transparent; }
 }
 
-.profile-wrapper::before {
-  width: 420px;
-  height: 420px;
-  animation-delay: 0s;
-}
-
-.profile-wrapper::after {
-  width: 480px;
-  height: 480px;
-  animation-delay: 1s;
-  border-color: rgba(59,130,246,0.15);
-}
-
-@keyframes orbitPulse {
-  0%,100% { transform: scale(1);   opacity: 0.6; }
-  50%      { transform: scale(1.05); opacity: 1; }
-}
-
-/* الدايرة الأساسية */
-.profile-ring {
-  position: relative;
-  width: 360px;
-  height: 360px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* الحلقة الدوارة */
-  background: conic-gradient(
-    from 0deg,
-    #8b5cf6 0%,
-    #3b82f6 30%,
-    #06b6d4 50%,
-    #3b82f6 70%,
-    #8b5cf6 100%
-  );
-  padding: 4px;
-  animation: spinRing 8s linear infinite;
-}
-
-@keyframes spinRing {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* الـ glow */
-.profile-glow {
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    rgba(139,92,246,0.2) 0%,
-    rgba(59,130,246,0.12) 40%,
-    transparent 70%
-  );
-  animation: glowBreath 3s ease-in-out infinite;
-  z-index: 0;
-}
-
-@keyframes glowBreath {
-  0%,100% { transform: scale(1);    opacity: 0.8; }
-  50%      { transform: scale(1.12); opacity: 1; }
-}
-
-/* الدايرة الداخلية الداكنة */
-.profile-ring::before {
-  content: "";
-  position: absolute;
-  width: 344px;
-  height: 344px;
-  border-radius: 50%;
-  background: #0f172a;
-  z-index: 1;
-}
-
-/* الصورة */
-.profile-img {
-  width: 336px;
-  height: 336px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: top;
-  position: relative;
-  z-index: 2;
-  transition: 0.5s ease;
-  /* عشان تتثبت ومتدورش مع الحلقة */
-  animation: counterSpin 8s linear infinite;
-}
-
-@keyframes counterSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(-360deg); }
-}
-
-.profile-img:hover {
-  filter: brightness(1.1) saturate(1.2);
-  transform: rotate(0deg) scale(1.04);
+/* ================= CURSOR TRAIL ================= */
+@keyframes trailFade {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
 }
 
 /* ================= BUTTONS ================= */
@@ -270,8 +259,8 @@ h1 span {
   margin-top: 25px;
   display: flex;
   gap: 15px;
-  flex-direction: row; /* ← جنب بعض على الشاشات الكبيرة */
-  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .btn {
@@ -316,28 +305,6 @@ h1 span {
 .socials a.github:hover     { background: #333; }
 .socials a.whatsapp:hover   { background: #25d366; }
 
-/* ================= TYPEWRITER ================= */
-.typewriter {
-  display: inline-block;
-  border-right: 2px solid #8b5cf6;
-  padding-right: 4px;
-  animation: blink 0.7s step-end infinite;
-  color: #8b5cf6;
-  font-size: 20px;
-  margin-top: 8px;
-  min-height: 28px;
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-
-/* ================= CURSOR TRAIL ================= */
-@keyframes trailFade {
-  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
-}
-
 /* ================= SKILL BARS ================= */
 .skill-bars {
   width: 100%;
@@ -372,81 +339,22 @@ h1 span {
   transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ================= TABLET ================= */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .first-section {
-    flex-direction: column; /* ← الصورة فوق والكلام تحت */
-    align-items: center;
+    flex-direction: column;
     text-align: center;
     padding: 60px 20px;
     min-height: auto;
-    gap: 40px;
   }
-
-  .text {
-    align-items: center;
-    text-align: center;
-  }
-
-  .btns {
-    justify-content: center;
-  }
-
-  .socials {
-    justify-content: center;
-  }
-
-  .profile-wrapper::before { width: 300px; height: 300px; }
-  .profile-wrapper::after  { width: 340px; height: 340px; }
-
-  .profile-ring {
-    width: 260px;
-    height: 260px;
-  }
-
-  .profile-ring::before {
-    width: 248px;
-    height: 248px;
-  }
-
-  .profile-img {
-    width: 240px;
-    height: 240px;
-  }
-
-  .profile-glow {
-    width: 300px;
-    height: 300px;
-  }
-
-  h1 { font-size: 36px; }
+  .text  { align-items: center; }
+  .btns  { justify-content: center; }
+  h1     { font-size: 32px; }
 }
 
-/* ================= MOBILE ================= */
 @media (max-width: 480px) {
-  .profile-wrapper::before { width: 240px; height: 240px; }
-  .profile-wrapper::after  { width: 270px; height: 270px; }
-
-  .profile-ring {
-    width: 210px;
-    height: 210px;
-  }
-
-  .profile-ring::before {
-    width: 198px;
-    height: 198px;
-  }
-
-  .profile-img {
-    width: 190px;
-    height: 190px;
-  }
-
-  .profile-glow {
-    width: 250px;
-    height: 250px;
-  }
-
-  h1      { font-size: 28px; }
+  .solar-system { width: 260px; height: 260px; }
+  h1     { font-size: 26px; }
   .search { display: none; }
+  .socials { justify-content: center; }
 }
