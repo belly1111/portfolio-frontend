@@ -30,10 +30,12 @@ function Home() {
       <section className="first-section reveal" ref={revealRef}>
 
         <div className="profile-wrapper">
+            <div className="profile-extra-ring">
           <div className="profile-ring">
             <div className="profile-glow"></div>
             <img src={profileImage} alt="Nabil" className="profile-img" />
           </div>
+        </div>
         </div>
 
         <div className="text">
