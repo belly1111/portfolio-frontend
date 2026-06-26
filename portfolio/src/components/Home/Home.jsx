@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import "./style.css";
 import Stars from "../Stars/Stars";
 import useReveal from "../../hooks/useReveal";
@@ -8,55 +8,32 @@ import profileImage2 from "../../assets/images/Screenshot 2026-06-21 210537.png"
 import profileImage3 from "../../assets/images/Screenshot 2026-06-21 210707.png";
 import Divider from "../Divider/Divider";
 
-
-
 const projects = [
-  { title: "Todo App",                 desc: "Finish your tasks and hand them in",            image: profileImage1, live: "#", code: "#" },
-  { title: "Joory Academy",            desc: "For teaching and memorizing the Quran",         image: profileImage2, live: "#", code: "#" },
-  { title: "The Fun Group Company",    desc: "Book your flight ticket now",                  image: profileImage3, live: "#", code: "#" },
+  { title: "Todo App",              desc: "Finish your tasks and hand them in",       image: profileImage1, live: "#", code: "#" },
+  { title: "Joory Academy",         desc: "For teaching and memorizing the Quran",    image: profileImage2, live: "#", code: "#" },
+  { title: "The Fun Group Company", desc: "Book your flight ticket now",              image: profileImage3, live: "#", code: "#" },
 ];
 
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://contact-backend-production-e0dc.up.railway.app";
 
 /* ========== HOME ========== */
 function Home() {
-  const sunRef = useRef(null);
   const revealRef = useReveal();
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const sun = sunRef.current;
-      if (!sun) return;
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      const moveX = ((e.clientX - centerX) / centerX) * 30;
-      const moveY = ((e.clientY - centerY) / centerY) * 30;
-      sun.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   return (
     <div id="home">
-      {/* النجوم — مرة واحدة بس للصفحة كلها */}
       <Stars />
 
-      {/* ===== HERO SECTION ===== */}
       <section className="first-section reveal" ref={revealRef}>
-        <div className="solar-system">
-          <div className="sun" ref={sunRef}></div>
-          <div className="orbit o1"><div className="planet p1"></div></div>
-          <div className="orbit o2"><div className="planet p2"></div></div>
-          <div className="orbit o3">
-            <div className="planet p3">
-              <div className="moon-orbit"><div className="moon"></div></div>
-            </div>
+
+        <div className="profile-wrapper">
+          <div className="profile-ring">
+            <div className="profile-glow"></div>
+            <img src={profileImage} alt="Nabil" className="profile-img" />
           </div>
-          <div className="orbit o4"><div className="planet p4"></div></div>
-          <div className="orbit o5"><div className="planet p5"></div></div>
-          <div className="orbit o6"><div className="planet p6"></div></div>
-          <div className="orbit o7"><div className="planet p7"></div></div>
-          <div className="orbit o8"><div className="planet p8"></div></div>
         </div>
 
         <div className="text">
@@ -85,17 +62,16 @@ function Home() {
             </a>
           </div>
         </div>
+
       </section>
-<Divider />
-      {/* ===== ABOUT SECTION ===== */}
+
+      <Divider />
       <AboutSection />
 
-<Divider />
-      {/* ===== PROJECTS SECTION ===== */}
+      <Divider />
       <ProjectsSection />
 
-<Divider />
-      {/* ===== CONTACT SECTION ===== */}
+      <Divider />
       <ContactSection />
     </div>
   );
@@ -130,8 +106,6 @@ function AboutSection() {
           </div>
         </div>
       </section>
-
-      {/* SERVICES تحت About مباشرة */}
       <ServicesSection />
     </>
   );
@@ -168,8 +142,8 @@ function ProjectsSection() {
               <h3>{project.title}</h3>
               <p>{project.desc}</p>
               <div className="project-links">
-                <a href="#">Live</a>
-                <a href="#">Code</a>
+                <a href={project.live} target="_blank" rel="noopener noreferrer">Live</a>
+                <a href={project.code} target="_blank" rel="noopener noreferrer">Code</a>
               </div>
             </div>
           </div>
@@ -191,117 +165,76 @@ function ContactSection() {
   const revealRef = useReveal();
   const statusRef = useRef(null);
 
-  const API_URL =
-    window.location.hostname === "localhost"
-      ? "http://localhost:8080"
-      : "https://contact-backend-production-e0dc.up.railway.app";
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const form = e.target;
-
     const name = form.name.value;
     const email = form.email.value;
     const message = form.message.value;
 
-    if (statusRef.current) {
-      statusRef.current.textContent = "Sending... 🚀";
-    }
+    if (statusRef.current) statusRef.current.textContent = "Sending... 🚀";
 
     try {
       const res = await fetch(`${API_URL}/contact`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       });
 
       const data = await res.json();
 
-      if (data.success) {
-        if (statusRef.current) {
-          statusRef.current.textContent = "Message sent successfully ✅";
-        }
-        form.reset();
-      } else {
-        if (statusRef.current) {
-          statusRef.current.textContent = "Failed to send ❌";
-        }
+      if (statusRef.current) {
+        statusRef.current.textContent = data.success
+          ? "Message sent successfully ✅"
+          : "Failed to send ❌";
       }
+
+      if (data.success) form.reset();
+
     } catch (err) {
       console.log(err);
-      if (statusRef.current) {
-        statusRef.current.textContent = "Server error ❌";
-      }
+      if (statusRef.current) statusRef.current.textContent = "Server error ❌";
     }
 
     setTimeout(() => {
-      if (statusRef.current) {
-        statusRef.current.textContent = "";
-      }
+      if (statusRef.current) statusRef.current.textContent = "";
     }, 3000);
   };
 
   return (
-    <div id="contact">
-      <Stars />
-
-      <section className="contact-section reveal" ref={revealRef}>
-        <div className="contact-container">
-          <h2>Contact Me</h2>
-          <p>Send me a message from the universe 🚀</p>
-
-          <form onSubmit={handleSubmit}>
-            <div className="input-box">
-              <input type="text" name="name" required />
-              <label>Name</label>
-            </div>
-
-            <div className="input-box">
-              <input type="email" name="email" required />
-              <label>Email</label>
-            </div>
-
-            <div className="input-box">
-              <textarea name="message" required></textarea>
-              <label>Message</label>
-            </div>
-
-            <button type="submit">Send</button>
-
-            <p className="status" ref={statusRef}></p>
-
-            <div className="social-icons">
-              <a
-                href="https://www.facebook.com/share/1D59ZYptjF/?mibextid=wwXIfr"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="fa-brands fa-facebook"></i>
-              </a>
-
-              <a
-                href="https://www.instagram.com/bellyy___1/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="fa-brands fa-instagram"></i>
-              </a>
-
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="fa-brands fa-github"></i>
-              </a>
-            </div>
-          </form>
-        </div>
-      </section>
-    </div>
+    <section id="contact" className="contact-section reveal" ref={revealRef}>
+      <div className="contact-container">
+        <h2>Contact Me</h2>
+        <p>Send me a message from the universe 🚀</p>
+        <form onSubmit={handleSubmit}>
+          <div className="input-box">
+            <input type="text" name="name" required />
+            <label>Name</label>
+          </div>
+          <div className="input-box">
+            <input type="email" name="email" required />
+            <label>Email</label>
+          </div>
+          <div className="input-box">
+            <textarea name="message" required></textarea>
+            <label>Message</label>
+          </div>
+          <button type="submit">Send</button>
+          <p className="status" ref={statusRef}></p>
+          <div className="social-icons">
+            <a href="https://www.facebook.com/share/1D59ZYptjF/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+              <i className="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/bellyy___1/" target="_blank" rel="noopener noreferrer">
+              <i className="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <i className="fa-brands fa-github"></i>
+            </a>
+          </div>
+        </form>
+      </div>
+    </section>
   );
 }
 
