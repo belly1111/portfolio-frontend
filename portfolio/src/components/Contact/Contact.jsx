@@ -7,10 +7,8 @@ function Contact() {
   const revealRef = useReveal();
   const statusRef = useRef(null);
 
-  const API_URL =
-    window.location.hostname === "localhost"
-      ? "http://localhost:8080"
-      : "https://contact-backend-production-e0dc.up.railway.app";
+  // const API_URL =
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,26 +24,23 @@ function Contact() {
     }
 
     try {
-      const res = await fetch(`${API_URL}/contact`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, message }),
-      });
+const res = await fetch("https://formspree.io/f/xojonpwg", {
+  method: "POST",
+  headers: {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ name, email, message }),
+});
 
-      const data = await res.json();
+      // const data = await res.json();
 
-      if (data.success) {
-        if (statusRef.current) {
-          statusRef.current.textContent = "Message sent successfully ✅";
-        }
-        form.reset();
-      } else {
-        if (statusRef.current) {
-          statusRef.current.textContent = "Failed to send ❌";
-        }
-      }
+if (res.ok) {
+  statusRef.current.textContent = "Message sent successfully ✅";
+  form.reset();
+} else {
+  statusRef.current.textContent = "Failed to send ❌";
+}
     } catch (err) {
       console.log(err);
       if (statusRef.current) {
