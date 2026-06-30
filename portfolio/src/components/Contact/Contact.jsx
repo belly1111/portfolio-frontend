@@ -7,9 +7,6 @@ function Contact() {
   const revealRef = useReveal();
   const statusRef = useRef(null);
 
-  // const API_URL =
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,25 +21,39 @@ function Contact() {
     }
 
     try {
-const res = await fetch("https://formspree.io/f/xojonpwg", {
-  method: "POST",
-  headers: {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ name, email, message }),
-});
+      const res = await fetch("https://formspree.io/f/xojonpwg", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
 
-      // const data = await res.json();
+      let data = {};
 
-if (res.ok) {
-  statusRef.current.textContent = "Message sent successfully ✅";
-  form.reset();
-} else {
-  statusRef.current.textContent = "Failed to send ❌";
-}
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
+
+      if (res.ok) {
+        if (statusRef.current) {
+          statusRef.current.textContent = "Message sent successfully ✅";
+        }
+        form.reset();
+      } else {
+        console.log("Formspree error:", data);
+
+        if (statusRef.current) {
+          statusRef.current.textContent =
+            data.error || "Failed to send ❌";
+        }
+      }
     } catch (err) {
       console.log(err);
+
       if (statusRef.current) {
         statusRef.current.textContent = "Server error ❌";
       }
